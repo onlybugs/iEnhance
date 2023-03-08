@@ -7,6 +7,8 @@ iEnhance is a multi-scale spatial projection and encoding network, to predict hi
 
 We provide the PyTorch implementations for both training and predicting procedures.
 
+### **_Note:_** To explore the detailed architecture of the iEnhance please read the file _module.py_.
+
 
 ## Dependency
 
@@ -35,3 +37,22 @@ For Hi-C data, we desire an input in _.cool_ file format. If your data is in _.h
 ### 2. Micro-C and scHi-C data
 
 For single-cell Hi-C data, we also desire to enter a separate _.cool_ file format. If your data is in another format for storing scHi-C data, please convert to _.scool_ format. Then use the cooler toolkit to pool _.scool_ file into multiple individual _.cool_ files for subsequent enhancements. For Micro-C data, please use the same pre-processing method as for Hi-C data.
+
+
+## Usage
+
+## **_Note:_** Due to historical legacy issues, the **_from normga4 import Construct_** code statement in all training and prediction code is forbidden to be removed, otherwise it will cause the script to crash!.
+
+### 1. Predicting
+To execute the Hi-C matrix enhancement script, first configure the basic information of the script.
+
+The following code blocks are the variables to be configured, **model** indicates the path where the pre-trained model is located, **fn** indicates the path of the input *.cool* format data, **chrs_list** is the chromosome number to be enhanced, and **cell_line_name** indicates the identifier of the final output result.
+~~~python
+from normga4 import Construct
+from module import iEnhance
+
+model = t.load("pretrained/BestHiCModule.pt",map_location = t.device('cpu'))
+fn = "./HiCdata/Rao2014-K562-MboI-allreps-filtered.10kb.cool"
+chrs_list = ['2' ,'4' ,'6' ,'8' ,'10' ,'12','16','17' ,'18','20','21']
+cell_line_name = "K562"
+~~~
