@@ -56,3 +56,22 @@ fn = "./HiCdata/Rao2014-K562-MboI-allreps-filtered.10kb.cool"
 chrs_list = ['2' ,'4' ,'6' ,'8' ,'10' ,'12','16','17' ,'18','20','21']
 cell_line_name = "K562"
 ~~~
+
+For scHi-C data, since the input dataset has performed pooling operation, we remove the **cell_line_name** variable and instead use **scpool_iden** to name each prediction independently.
+~~~python
+scpool_iden = ["hip_"+i for i in ["1","10","20","30","50","80","100"]]
+~~~
+
+For Micro-C data, we recommend using the **predict-hic.py** script for augmentation, but remember to change the path of the pre-trained model. Other parameters are set as for Hi-C data.
+
+When all preparations have been completed, execute the following command:
+~~~bash
+python predict-*.py
+~~~
+
+### 2. Accessing predicted data
+The output predictions are stored in *.npz* files that store numpy arrays under keys.
+To access the enhanced HR matrix, use the following command in a python file: 
+~~~python
+contact_map = np.load("path/to/file.npz)['fakeh'].
+~~~
