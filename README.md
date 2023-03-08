@@ -49,7 +49,7 @@ To execute the Hi-C matrix enhancement script, first configure the basic informa
 The following code blocks are the variables to be configured, **model** indicates the path where the pre-trained model is located, **fn** indicates the path of the input *.cool* format data, **chrs_list** is the chromosome number to be enhanced, and **cell_line_name** indicates the identifier of the final output result.
 ~~~python
 from normga4 import Construct
-from module import iEnhance
+from model import iEnhance
 
 model = t.load("pretrained/BestHiCModule.pt",map_location = t.device('cpu'))
 fn = "./HiCdata/Rao2014-K562-MboI-allreps-filtered.10kb.cool"
