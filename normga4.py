@@ -1,6 +1,4 @@
-# 22-7-28
-# kli
-# G D
+
 
 import torch as t
 import torch.nn as nn
@@ -10,7 +8,7 @@ from collections import OrderedDict
 
 device = t.device('cuda' if t.cuda.is_available() else 'cpu')
 
-# MNF
+
 class MF(nn.Module):
     def __init__(self,in_channel,out_channel,N) -> None:
         super(MF,self).__init__()
@@ -21,15 +19,12 @@ class MF(nn.Module):
 
     def forward(self,x):
         x = self.relu(self.conv1(x))
-        # 乘权重 这里是pair mul,自动广播
         x = x.mul(self.delin)
-        # 构造r1矩阵
         xt = x.permute([0,1,3,2])
         x = (x * xt).mul(self.relin)
 
         return x
 
-# AFF
 class AFF(nn.Module):
     '''
     AFF
@@ -121,7 +116,6 @@ class DenseLayer(nn.Sequential):
         # dense
         return t.cat([x,new_features],1)
 
-# 构造Dense块
 class DenseBlock(nn.Sequential):
     def __init__(self,num_layers,num_input_features,bn_size,growth_rate,drop_rate):
         super(DenseBlock,self).__init__()
@@ -131,39 +125,32 @@ class DenseBlock(nn.Sequential):
                                bn_size,drop_rate)
             self.add_module("denselayer%d" % (i+1),layer)
 
-# 构造DenseNet
 class DenseNet(nn.Module):
     def __init__(self,input_channel = 64,growth_rate = 8,block_config = (2,4,6),
     num_init_feature = 128,bn_size = 4,compression_rate = 0.5,
     drop_rate = 0):
         super(DenseNet,self).__init__()
-        # first conv2d /4倍数
         self.features = nn.Sequential(OrderedDict([
             ("conv0",nn.Conv2d(input_channel,num_init_feature,kernel_size=5,stride=1,padding=2,bias=False)),
             ("norm0",nn.BatchNorm2d(num_init_feature)),
             ("relu0",nn.ReLU(inplace=False))
         ]))
 
-        # Dense Block
         num_features = num_init_feature
         for i,num_layers in enumerate(block_config):
             block = DenseBlock(num_layers,num_features,bn_size,growth_rate,drop_rate)
             self.features.add_module("denseblock%d"%(i+1),block)
             num_features += num_layers*growth_rate
 
-        # # final bn+Relu
         self.features.add_module("norm5",nn.BatchNorm2d(num_features))
         self.features.add_module("relu5",nn.ReLU(inplace=False))
 
     def forward(self,x):
         fea = self.features(x)
-
-        # tfea = fea.permute([0,1,3,2])
     
         return fea
 
 
-# Res
 class ResLayer(nn.Module):
     def __init__(self,in_channel,out_channel,ks = 1,p = 0,downsample = False,s = 1):
         super(ResLayer,self).__init__()
@@ -232,11 +219,6 @@ class ResNet(nn.Module):
 class Construct(nn.Module):
     def __init__(self) -> None:
         super(Construct,self).__init__()
-        # self.gen = nn.Sequential(OrderedDict([
-        #     ("Mix Layer",MixLayer()),
-        #     ("Dense Net",DenseNet()), # 160 150 150
-        #     ("ResNet",ResNet())
-        # ]))
         self.mix = MultFusion()
         self.den = DenseNet()
         self.res = ResNet()
@@ -248,10 +230,3 @@ class Construct(nn.Module):
 
         return self.res(dx)
 
-
-
-# G = Generator()
-# D = Discriminator()
-# inp = t.randn(2,1,150,150)
-# fake = G(inp)
-# print(D(fake),D(inp))
