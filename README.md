@@ -7,7 +7,7 @@ iEnhance is a multi-scale spatial projection and encoding network, to predict hi
 
 We provide the PyTorch implementations for both training and predicting procedures.
 
-### **_Note:_** To explore the detailed architecture of the iEnhance please read the file _module.py_.
+### **_Note:_** To explore the detailed architecture of the iEnhance please read the file _model.py_.
 
 
 ## Dependency
