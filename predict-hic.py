@@ -5,7 +5,7 @@ import time
 import cooler
 
 from normga4 import Construct
-from module import iEnhance
+from model import iEnhance
 
 model = t.load("pretrained/BestHiCModule.pt",map_location = t.device('cpu'))
 fn = "./HiCdata/Rao2014-K562-MboI-allreps-filtered.10kb.cool"
