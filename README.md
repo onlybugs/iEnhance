@@ -7,7 +7,7 @@ iEnhance is a multi-scale spatial projection and encoding network, to predict hi
 
 We provide the PyTorch implementations for both training and predicting procedures.
 
-### **_Note:_** To explore the detailed architecture of the iEnhance please read the file _model.py_.
+### **_Note:_** To explore the detailed architecture of the iEnhance please read the file _module.py_.
 
 
 ## Dependency
@@ -75,3 +75,37 @@ To access the enhanced HR matrix, use the following command in a python file:
 ~~~python
 contact_map = np.load("path/to/file.npz)['fakeh'].
 ~~~
+
+### 3. Training
+To retrain iEnhance, you need to build a training data first.
+
+
+1. Reading raw *.cool* data and separately storing blocks in *.npz* format.
+
+The following code blocks are the variables to be configured, **fn** indicates the path of the input *.cool* format data;  **scale** indicates the multiplier to be downsampled; **out_path** indicates the name of the folder where the output file is stored.
+~~~python
+fn = "./data/Rao2014-GM12878-MboI-allreps-filtered.10kb.cool"
+scale = 4 # Randomly downsampling to 1/16 reads.
+out_path = "./divide-path/"
+~~~
+>**_Note:_** The folder required for this and subsequent steps should already be created.
+
+Finally, execute the following command:
+~~~bash
+python divide-data.py
+~~~
+
+2. De-redundanting datasets and constructing train and test sets.
+
+Specify the datasets dividing and give the storage path of the previous step in the `script`, then execute the following command:
+~~~bash
+python construct_sets.py
+~~~
+
+3. Training the iEnhance.
+
+When you have completed all the above steps, you can retrain the model with the following command:
+~~~bash
+python train.py 0
+~~~
+> Note: If your training is interrupted or you want to continue training from an epoch, change the script parameters and execute `python train.py 1`.
