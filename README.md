@@ -25,7 +25,6 @@ The following versions are recommended when using iEnhance:
 
 **_Note:_** GPU usage for training and testing is highly recommended.
 
-185 2929 3159
 
 ## Data Preparation
 
