@@ -1,5 +1,6 @@
 # iEnhance: a Multi-scale Spatial Projection Encoding Network to Enhance Chromatin interaction data Resolution
 
+### **_Note:_** Our code will be uploaded in its entirety after the article is accepted.
 
 ## Summary
 
