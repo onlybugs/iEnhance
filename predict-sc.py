@@ -4,6 +4,7 @@ import torch as t
 import time
 import cooler
 
+# wait accept!
 from normga4 import Construct
 from model import iEnhance
 
