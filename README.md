@@ -61,7 +61,7 @@ For scHi-C data, since the input dataset has performed pooling operation, we rem
 scpool_iden = ["hip_"+i for i in ["1","10","20","30","50","80","100"]]
 ~~~
 
-For Micro-C data, we recommend using the **predict-hic.py** script for augmentation, but remember to change the path of the pre-trained model. Other parameters are set as for Hi-C data.
+For Micro-C data, we recommend using the **predict-hic.py** script for augmentation, but remember to change the path of the pre-trained model. Other parameters are set as for Hi-C data
 
 When all preparations have been completed, execute the following command:
 ~~~bash
