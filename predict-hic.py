@@ -115,7 +115,7 @@ def Combine(d_size,jump,lens,hic_m):
     Hrmat = t.triu(Hrmat,diagonal=1).T + t.triu(Hrmat)
     return Hrmat
 
-def Readcooler(fn,chr,b = True):
+def Readcooler(fn,chr,b = False):
     # print('--')
     rdata = cooler.Cooler(fn)
     
