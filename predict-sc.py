@@ -124,15 +124,6 @@ def Combine(d_size,jump,lens,hic_m):
     Hrmat = t.triu(Hrmat,diagonal=1).T + t.triu(Hrmat)
     return Hrmat
 
-def ReadFile(fn,chr):
-    '''
-    Read cooler
-    '''
-    rdata = cooler.Cooler(fn)
-    rmat = rdata.matrix(balance=True).fetch(chr)
-    # rmat[np.isnan(rmat)] = 0
-    
-    return rmat
 
 def predict(c):
     i = 0
