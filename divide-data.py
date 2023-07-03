@@ -88,7 +88,8 @@ def divide(c):
     start = time.time()
     # Step1 ReadMat
     rdata = cooler.Cooler(fn)
-    rmat = rdata.matrix(balance=True).fetch('chr' + c)
+    # balance = T in part KRnorm!!! 
+    rmat = rdata.matrix(balance=False).fetch('chr' + c)
     rmat, _ = remove_zeros(rmat)
 
     # Step2 Downsampling and Norm
